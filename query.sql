@@ -154,12 +154,12 @@ select * from users
   or full_name ilike '%Haque%'
 
 --- Query 3: Retrieve all booking records where the payment status is missing (NULL), replacing the empty result with 'Action Required
-
-select booking_id, user_id, match_id, seat_number, coalesce(payment_status :: text, 'Action Required') from bookings
-  where payment_status is NULL
+select booking_id, user_id, match_id, seat_number, 
+   COALESCE(payment_status :: text, 'Action Required') as payment_status 
+   from bookings
+   where payment_status is NULL
 
 ---Query 4: Retrieve match booking details along with the User's full name and the scheduled Match fixture teams.
-
 select booking_id, full_name, fixture, total_cost from bookings 
 inner join users 
   on bookings.user_id = users.user_id
@@ -167,24 +167,18 @@ inner join matches
   on bookings.match_id = matches.match_id
 
 --- Query 5: Display a comprehensive list of all users and their booking IDs, ensuring that fans who have never bought a ticket are still listed.
-
 select * from users 
 left join bookings on users.user_id = bookings.user_id
 
 --- Query 6: Find all ticket bookings where the total cost is strictly higher than the average cost of all ticket bookings.
-
-select booking_id, total_cost from bookings 
+select booking_id, round(total_cost) from bookings 
   where total_cost > (
   select avg(total_cost)
     from bookings
 )
 
 --- Query 7: Retrieve the top 2 most expensive matches sorted by base ticket price, skipping the absolute highest premium match.
-
-select booking_id, b.match_id, user_id, fixture, total_cost from bookings as b
-  join matches as m
-  on b.match_id = m.match_id
-  where total_cost > (
-  select avg(total_cost)
-    from bookings
-) limit 2 offset 1
+select match_id, fixture, tournament_category, base_ticket_price 
+  from matches
+  order by base_ticket_price DESC
+  limit 2 offset 1;   
