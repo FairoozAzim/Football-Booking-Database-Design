@@ -175,16 +175,16 @@ left join bookings on users.user_id = bookings.user_id
 
 select booking_id, total_cost from bookings 
   where total_cost > (
-  SELECT AVG(total_cost)
-    FROM bookings
+  select avg(total_cost)
+    from bookings
 )
 
 --- Query 7: Retrieve the top 2 most expensive matches sorted by base ticket price, skipping the absolute highest premium match.
 
-select booking_id, bookings.match_id, bookings.user_id, fixture, total_cost from bookings 
-  join matches 
-  on bookings.match_id = matches.match_id
+select booking_id, b.match_id, user_id, fixture, total_cost from bookings as b
+  join matches as m
+  on b.match_id = m.match_id
   where total_cost > (
-  SELECT AVG(total_cost)
-    FROM bookings
+  select avg(total_cost)
+    from bookings
 ) limit 2 offset 1
