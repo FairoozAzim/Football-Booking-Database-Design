@@ -97,24 +97,59 @@ INSERT INTO Users (user_id, full_name, email, role, phone_number) VALUES
 (1, 'Tanvir Rahman', 'tanvir@mail.com', 'Football Fan', '+8801711111111'),
 (2, 'Asif Haque', 'asif@mail.com', 'Football Fan', '+8801722222222'),
 (3, 'Sajjad Rahman', 'sajjad@mail.com', 'Ticket Manager', '+8801733333333'),
-(4, 'Jannat Ara', 'jannat@mail.com', 'Football Fan', NULL);
+(4, 'Jannat Ara', 'jannat@mail.com', 'Football Fan',NULL),
+(5, 'Mehedi Hasan', 'mehedi@mail.com', 'Football Fan', '+8801744444444'),
+(6, 'Nabila Islam', 'nabila@mail.com', 'Ticket Manager', '+8801755555555'),
+(7, 'Rafiq Uddin', 'rafiq@mail.com', 'Ticket Manager', '+8801766666666'),
+(8, 'Farzana Akter', 'farzana@mail.com', 'Football Fan', NULL),
+(9, 'Imran Hossain', 'imran@mail.com', 'Ticket Manager', '+8801777777777'),
+(10, 'Tanvir Ahmed', 'tanvirahmed@mail.com', 'Football Fan', '+88017998899');
+
 
 -- =========================================================================
 -- DATA SEEDING: INSERT SAMPLE DATA INTO MATCHES
 -- =========================================================================
 INSERT INTO Matches (match_id, fixture, tournament_category, base_ticket_price, match_status) VALUES
 (101, 'Real Madrid vs Barcelona', 'Champions League', 150.00, 'Available'),
-(102, 'Man City vs Liverpool', 'Premier League', 120.00, 'Selling Fast'),
-(103, 'Bayern Munich vs PSG', 'Champions League', 130.00, 'Available'),
-(104, 'AC Milan vs Inter Milan', 'Serie A', 90.00, 'Sold Out'),
-(105, 'Juventus vs Roma', 'Serie A', 80.00, 'Available');
+(102, 'Manchester United vs Liverpool', 'Premier League', 120.00, 'Available'),
+(103, 'Bayern Munich vs Borussia Dortmund', 'Bundesliga', 110.00, 'Available'),
+(104, 'PSG vs Inter Milan', 'Champions League', 140.00, 'Sold Out'),
+(105, 'Juventus vs AC Milan', 'Serie A', 100.00, 'Selling Fast'),
+(106, 'Arsenal vs Chelsea', 'Premier League', 130.00, 'Available'),
+(107, 'Atletico Madrid vs Sevilla', 'La Liga', 90.00, 'Postponed'),
+(108, 'Ajax vs Feyenoord', 'Eredivisie', 80.00, 'Selling Fast'),
+(109, 'Benfica vs Porto', 'Primeira Liga', 85.00, 'Sold Out');
+
+
 
 -- =========================================================================
 -- DATA SEEDING: INSERT SAMPLE DATA INTO BOOKINGS
 -- =========================================================================
 INSERT INTO Bookings (booking_id, user_id, match_id, seat_number, payment_status, total_cost) VALUES
 (501, 1, 101, 'A-12', 'Confirmed', 150.00),
-(502, 1, 102, 'B-04', 'Confirmed', 120.00),
-(503, 2, 101, 'A-13', 'Confirmed', 150.00),
-(504, 2, 101, NULL, NULL, 150.00),
-(505, 3, 102, 'C-20', 'Pending', 120.00);
+(502, 2, 101, 'A-13', 'Confirmed', 150.00),
+(503, 3, 102, 'B-05', 'Pending', 120.00),
+(504, 4, 103, 'C-01', NULL, 110),
+(505, 5, 104, 'D-10', 'Cancelled', 140.00),
+(506, 6, 105, 'E-07', 'Confirmed', 100.00),
+(507, 7, 106, 'F-02', 'Confirmed', 130.00),
+(508, 8, 107, 'G-11', NULL, 90.00),
+(509, 9, 108, 'H-08', 'Confirmed', 80.00);
+
+
+-- =========================================================================
+-- Queries 1-7
+-- =========================================================================
+
+--  Query1: Retrieve all upcoming football matches belonging to the 'Champions League' where the match status is 'Available'
+
+select * from matches 
+  where tournament_category = 'Champions League'
+  and match_status = 'Available'
+
+--  Query2: Search for all users whose full names start with 'Tanvir' or contain the phrase 'Haque' (case-insensitive).
+
+select * from users 
+  where full_name ilike 'Tanvir%' 
+  or full_name ilike '%Haque%'
+
