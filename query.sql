@@ -142,15 +142,13 @@ INSERT INTO Bookings (booking_id, user_id, match_id, seat_number, payment_status
 -- =========================================================================
 
 --  Query1: Retrieve all upcoming football matches belonging to the 'Champions League' where the match status is 'Available'
-
 select * from matches 
   where tournament_category = 'Champions League'
   and match_status = 'Available'
 
 --  Query2: Search for all users whose full names start with 'Tanvir' or contain the phrase 'Haque' (case-insensitive).
-
 select * from users 
-  where full_name ilike 'Tanvir%' 
+  where full_name like 'Tanvir%' 
   or full_name ilike '%Haque%'
 
 --- Query 3: Retrieve all booking records where the payment status is missing (NULL), replacing the empty result with 'Action Required
